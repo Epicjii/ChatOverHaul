@@ -1,4 +1,0 @@
-name: Chatoverhaul
-version: '${version}'
-main: epicjii.chatoverhaul.Chatoverhaul
-api-version: 1.18
