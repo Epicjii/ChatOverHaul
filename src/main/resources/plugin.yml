@@ -2,3 +2,8 @@ name: ChatOverHaul
 version: '${version}'
 main: chatoverhaul.ChatOverHaul
 api-version: 1.18
+commands:
+  reply:
+    description: Replies to last messager
+    usage: /r or /reply
+    aliases: [reply, r]
