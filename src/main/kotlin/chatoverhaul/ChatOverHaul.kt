@@ -7,7 +7,6 @@ import org.bukkit.plugin.java.JavaPlugin
 
 class ChatOverHaul : JavaPlugin() {
 
-    var command : ReplyCommand? = null
     override fun onEnable() {
         // Plugin startup logic
 
