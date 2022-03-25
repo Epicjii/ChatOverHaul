@@ -1,5 +1,3 @@
-
-
 plugins {
     id("org.jetbrains.kotlin.jvm") version "1.6.10"
     id("com.github.johnrengelman.shadow") version "7.1.1"
@@ -39,7 +37,7 @@ tasks {
     processResources {
         filesMatching("plugin.yml") {
             expand(
-                    "version" to version
+                "version" to version
             )
         }
     }
@@ -58,7 +56,6 @@ tasks {
         dependsOn(shadowJar)
     }
 
-
     runServer {
         // Configure the Minecraft version for our task.
         // This is the only required configuration besides applying the plugin.
@@ -68,5 +65,11 @@ tasks {
 
     clean {
         delete("build")
+    }
+
+    create("getCurrentVersion") {
+        doFirst {
+            println(version)
+        }
     }
 }
