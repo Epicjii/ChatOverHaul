@@ -1,6 +1,7 @@
 package chatoverhaul.minimessage
 
 import io.papermc.paper.event.player.AsyncChatEvent
+import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.TextComponent
 import net.kyori.adventure.text.minimessage.MiniMessage
 import org.bukkit.event.EventHandler
@@ -13,8 +14,23 @@ class ChatFormatter : Listener {
     @EventHandler(priority = EventPriority.HIGH)
     fun reformatChatMessage(event: AsyncChatEvent) {
 
-        val message = event.message() as TextComponent
-        val newMessage = messageManipulator.deserialize(message.content())
+        val listOfChildMessage = event.message().children()
+        val message: String = chatRebuilder(listOfChildMessage) + (event.message() as TextComponent).content()
+
+        val newMessage = messageManipulator.deserialize(message)
+
         event.message(newMessage)
+    }
+
+    private fun chatRebuilder(componentList: List<Component>): String {
+        var message = ""
+        if (componentList.isNotEmpty()) {
+            for (component: Component in componentList) {
+                message += chatRebuilder(component.children())
+                message += (component as TextComponent).content()
+            }
+            return message
+        }
+        return message
     }
 }
