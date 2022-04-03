@@ -11,7 +11,7 @@ import org.bukkit.event.Listener
 class ChatFormatter : Listener {
     private val messageManipulator = MiniMessage.miniMessage()
 
-    @EventHandler(priority = EventPriority.HIGH)
+    @EventHandler(priority = EventPriority.LOW)
     fun reformatChatMessage(event: AsyncChatEvent) {
 
         val listOfChildMessage = event.message().children()
