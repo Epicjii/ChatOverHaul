@@ -15,20 +15,18 @@ class ChatFormatter : Listener {
     @EventHandler(priority = EventPriority.HIGHEST)
     fun reformatChatMessage(event: AsyncChatEvent) {
 
-        val listOfChildMessages = event.message().children()
+        val eventMessage = mutableListOf(event.message())
         val gatewayMessage = mutableListOf<Component>()
         val miniMessages = mutableListOf<Component>()
 
-        if (listOfChildMessages.isNotEmpty()) {
-            for (component: Component in listOfChildMessages) {
-                if (component.hasStyling()) {
-                    gatewayMessage.add(component)
-                } else {
-                    miniMessages.add(component)
-                }
+        val reorganizedMessages = chatOrganizer(eventMessage)
+
+        for (component: Component in reorganizedMessages) {
+            if (component.hasStyling()) {
+                gatewayMessage.add(component)
+            } else {
+                miniMessages.add(component)
             }
-        } else {
-            miniMessages.add(event.message())
         }
 
         val message: String = miniMessages.joinToString("") {
@@ -37,20 +35,20 @@ class ChatFormatter : Listener {
 
         val newMessage = messageManipulator.deserialize(message)
 
-        event.message(Component.join(JoinConfiguration.noSeparators(),gatewayMessage + newMessage))
+        event.message(Component.join(JoinConfiguration.noSeparators(), gatewayMessage + newMessage))
     }
 
-    private fun chatRebuilder(componentList: List<Component>): String {
-        var message = ""
-        if (componentList.isNotEmpty()) {
-            for (component: Component in componentList) {
+    private fun chatOrganizer(componentList: List<Component>): List<Component> {
+        val listOfComponents = mutableListOf<Component>()
 
-
-                message += chatRebuilder(component.children())
-                message += (component as TextComponent).content()
+        for (component: Component in componentList) {
+            if (component.children().isNotEmpty()) {
+                listOfComponents.addAll(component.children())
+                listOfComponents.addAll(chatOrganizer(listOfComponents))
+            } else {
+                listOfComponents.add(component)
             }
-            return message
         }
-        return message
+        return listOfComponents.distinct()
     }
 }
