@@ -8,12 +8,29 @@ import net.kyori.adventure.text.minimessage.MiniMessage
 import org.bukkit.event.EventHandler
 import org.bukkit.event.EventPriority
 import org.bukkit.event.Listener
+import org.bukkit.event.server.BroadcastMessageEvent
 
 class ChatFormatter : Listener {
     private val messageManipulator = MiniMessage.miniMessage()
 
     @EventHandler(priority = EventPriority.HIGHEST)
     fun reformatChatMessage(event: AsyncChatEvent) {
+
+        val eventMessage = event.message()
+        val reorganizedMessages = chatOrganizer(eventMessage)
+
+        val newMessage = reorganizedMessages.map {
+            if(it.hasStyling()) {
+                it
+            }  else {
+                messageManipulator.deserialize((it as TextComponent).content())
+            }
+        }
+        event.message(Component.join(JoinConfiguration.noSeparators(), newMessage))
+    }
+
+    @EventHandler(priority = EventPriority.HIGHEST)
+    fun reformatChatMessage(event: BroadcastMessageEvent) {
 
         val eventMessage = event.message()
         val reorganizedMessages = chatOrganizer(eventMessage)
