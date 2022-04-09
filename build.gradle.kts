@@ -1,12 +1,12 @@
 plugins {
-    id("org.jetbrains.kotlin.jvm") version "1.6.10"
-    id("com.github.johnrengelman.shadow") version "7.1.1"
+    id("org.jetbrains.kotlin.jvm") version "1.6.20"
+    id("com.github.johnrengelman.shadow") version "7.1.2"
     id("xyz.jpenilla.run-paper") version "1.0.6"
     java
 }
 
 group = "Epicjii"
-version = "1.1.4"
+version = "1.2.0"
 
 repositories {
     mavenCentral()
@@ -22,6 +22,7 @@ repositories {
 
 dependencies {
     compileOnly("io.papermc.paper:paper-api:1.18.2-R0.1-SNAPSHOT")
+    implementation("com.notkamui.libs:keval:0.8.0")
 }
 
 tasks {
@@ -30,7 +31,7 @@ tasks {
             jvmTarget = "17"
             apiVersion = "1.6"
             languageVersion = "1.6"
-            freeCompilerArgs = listOf("-Xopt-in=kotlin.RequiresOptIn")
+            freeCompilerArgs = listOf("-opt-in=kotlin.RequiresOptIn")
         }
     }
 

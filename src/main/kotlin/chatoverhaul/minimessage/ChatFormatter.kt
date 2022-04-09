@@ -1,60 +1,48 @@
 package chatoverhaul.minimessage
 
+import chatoverhaul.ChatUtilities
+import chatoverhaul.ChatUtilities.getContent
 import io.papermc.paper.event.player.AsyncChatEvent
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.JoinConfiguration
 import net.kyori.adventure.text.TextComponent
 import net.kyori.adventure.text.minimessage.MiniMessage
 import org.bukkit.event.EventHandler
-import org.bukkit.event.EventPriority
 import org.bukkit.event.Listener
 import org.bukkit.event.server.BroadcastMessageEvent
 
 class ChatFormatter : Listener {
     private val messageManipulator = MiniMessage.miniMessage()
 
-    @EventHandler(priority = EventPriority.HIGHEST)
+    @EventHandler
     fun reformatChatMessage(event: AsyncChatEvent) {
 
         val eventMessage = event.message()
-        val reorganizedMessages = chatOrganizer(eventMessage)
+        val reorganizedMessages = ChatUtilities.chatOrganizer(eventMessage)
 
         val newMessage = reorganizedMessages.map {
             if(it.hasStyling()) {
                 it
             }  else {
-                messageManipulator.deserialize((it as TextComponent).content())
+                messageManipulator.deserialize(it.getContent())
             }
         }
         event.message(Component.join(JoinConfiguration.noSeparators(), newMessage))
     }
 
-    @EventHandler(priority = EventPriority.HIGHEST)
+    @EventHandler
     fun reformatChatMessage(event: BroadcastMessageEvent) {
 
         val eventMessage = event.message()
-        val reorganizedMessages = chatOrganizer(eventMessage)
+        val reorganizedMessages = ChatUtilities.chatOrganizer(eventMessage)
 
         val newMessage = reorganizedMessages.map {
             if(it.hasStyling()) {
                 it
             }  else {
-                messageManipulator.deserialize((it as TextComponent).content())
+                messageManipulator.deserialize(it.getContent())
             }
         }
         event.message(Component.join(JoinConfiguration.noSeparators(), newMessage))
-    }
-
-    private fun chatOrganizer(component: Component): List<Component> {
-        val listOfComponents = mutableListOf<Component>()
-
-        if (component.children().isEmpty()) {
-            return listOf(component)
-        }
-
-        for (childComponent: Component in component.children()) {
-            listOfComponents.addAll(chatOrganizer(childComponent))
-        }
-        return listOfComponents
     }
 }

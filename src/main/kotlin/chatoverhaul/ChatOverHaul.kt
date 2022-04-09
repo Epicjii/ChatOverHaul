@@ -1,6 +1,7 @@
 package chatoverhaul
 
 import chatoverhaul.minimessage.ChatFormatter
+import chatoverhaul.mth.MathMessage
 import chatoverhaul.replycommand.ReplyCommand
 import org.bukkit.event.HandlerList
 import org.bukkit.plugin.java.JavaPlugin
@@ -13,6 +14,7 @@ class ChatOverHaul : JavaPlugin() {
         val replyCommand = getCommand("reply")
 
         server.pluginManager.registerEvents(ChatFormatter(), this)
+        server.pluginManager.registerEvents(MathMessage(),this)
         if (replyCommand != null) {
             val command = ReplyCommand(replyCommand)
             replyCommand.setExecutor(command)

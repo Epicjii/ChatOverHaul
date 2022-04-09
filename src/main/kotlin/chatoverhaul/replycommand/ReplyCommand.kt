@@ -22,7 +22,6 @@ class ReplyCommand(private val replyCommand: PluginCommand) : CommandExecutor, T
     private val aliases = replyCommand.aliases
 
     override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>): Boolean {
-//        val message = java.lang.String.join(" ", *args)
         val message = args.joinToString(" ")
         val replyTarget = replierToTargetMap[sender]
 
