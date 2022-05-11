@@ -5,7 +5,6 @@ import chatoverhaul.ChatUtilities.getContent
 import io.papermc.paper.event.player.AsyncChatEvent
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.JoinConfiguration
-import net.kyori.adventure.text.TextComponent
 import net.kyori.adventure.text.minimessage.MiniMessage
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
@@ -21,9 +20,9 @@ class ChatFormatter : Listener {
         val reorganizedMessages = ChatUtilities.chatOrganizer(eventMessage)
 
         val newMessage = reorganizedMessages.map {
-            if(it.hasStyling()) {
+            if (it.hasStyling()) {
                 it
-            }  else {
+            } else {
                 messageManipulator.deserialize(it.getContent())
             }
         }
@@ -37,9 +36,9 @@ class ChatFormatter : Listener {
         val reorganizedMessages = ChatUtilities.chatOrganizer(eventMessage)
 
         val newMessage = reorganizedMessages.map {
-            if(it.hasStyling()) {
+            if (it.hasStyling()) {
                 it
-            }  else {
+            } else {
                 messageManipulator.deserialize(it.getContent())
             }
         }

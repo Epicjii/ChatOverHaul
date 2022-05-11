@@ -9,7 +9,6 @@ import com.notkamui.keval.keval
 import io.papermc.paper.event.player.AsyncChatEvent
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.JoinConfiguration
-import net.kyori.adventure.text.TextComponent
 import org.bukkit.event.EventHandler
 import org.bukkit.event.EventPriority
 import org.bukkit.event.Listener
@@ -28,7 +27,8 @@ class MathMessage : Listener {
                 it
             } else {
                 Component.text(parser.replace(it.getContent()) { matchResult ->
-                    calculator(matchResult) }
+                    calculator(matchResult)
+                }
                 )
             }
         }
@@ -36,7 +36,7 @@ class MathMessage : Listener {
     }
 
     private fun calculator(match: MatchResult): String {
-        val result : Double
+        val result: Double
         try {
             result = match.groups[1]!!.value.keval()
         } catch (err: KevalZeroDivisionException) {

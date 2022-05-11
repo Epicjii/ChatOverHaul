@@ -12,16 +12,20 @@ class ChatOverHaul : JavaPlugin() {
         // Plugin startup logic
 
         val replyCommand = getCommand("reply")
+        val helpCommand = getCommand("help")
 
         server.pluginManager.registerEvents(ChatFormatter(), this)
-        server.pluginManager.registerEvents(MathMessage(),this)
+        server.pluginManager.registerEvents(MathMessage(), this)
         if (replyCommand != null) {
             val command = ReplyCommand(replyCommand)
             replyCommand.setExecutor(command)
             replyCommand.tabCompleter = command
             server.pluginManager.registerEvents(command, this)
         }
-
+        if (helpCommand != null) {
+            val command = HelpCommand()
+            helpCommand.setExecutor(command)
+        }
     }
 
     override fun onDisable() {
