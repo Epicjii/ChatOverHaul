@@ -7,6 +7,6 @@ commands:
     description: Replies to last messager
     usage: /r or /reply
     aliases: [reply, r]
-  help:
+  messagehelp:
     description: Help for all the features
     usage: /help

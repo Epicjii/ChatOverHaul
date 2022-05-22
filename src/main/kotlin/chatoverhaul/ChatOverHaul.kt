@@ -12,7 +12,7 @@ class ChatOverHaul : JavaPlugin() {
         // Plugin startup logic
 
         val replyCommand = getCommand("reply")
-        val helpCommand = getCommand("help")
+        val helpCommand = getCommand("messagehelp")
 
         server.pluginManager.registerEvents(ChatFormatter(), this)
         server.pluginManager.registerEvents(MathMessage(), this)
