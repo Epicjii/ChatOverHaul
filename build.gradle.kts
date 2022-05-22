@@ -6,7 +6,9 @@ plugins {
 }
 
 group = "Epicjii"
-version = "1.2.2"
+val version: String by project
+
+project.version = version
 
 repositories {
     mavenCentral()
