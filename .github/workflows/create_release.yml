@@ -1,13 +1,6 @@
 name: Publish Release
 
 on:
-  push:
-    branches:
-      - main
-
-    paths:
-      - '**/gradle.properties'
-
   workflow_dispatch:
 
 jobs:
