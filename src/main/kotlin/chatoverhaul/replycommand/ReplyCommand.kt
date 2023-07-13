@@ -1,5 +1,6 @@
 package chatoverhaul.replycommand
 
+import chatoverhaul.ChatUtilities.format
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.format.TextColor
 import net.kyori.adventure.text.format.TextDecoration
@@ -24,6 +25,7 @@ class ReplyCommand(private val replyCommand: PluginCommand) : CommandExecutor, T
     override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<String>): Boolean {
         val message = args.joinToString(" ")
         val replyTarget = replierToTargetMap[sender]
+        val formattedMessage = Component.text(message).format()
 
         if (replyTarget == null) {
             sender.sendMessage(
@@ -32,14 +34,12 @@ class ReplyCommand(private val replyCommand: PluginCommand) : CommandExecutor, T
             return true
         } else {
             sender.sendMessage(
-                Component.text("You reply: $message")
-                    .decoration(TextDecoration.ITALIC, true)
-                    .color(TextColor.fromHexString("#AAAAAA"))
+                Component.text("You reply: ")
+                    .decoration(TextDecoration.ITALIC, true).append(formattedMessage)
             )
             replyTarget.sendMessage(
-                Component.text(sender.name + " replies: " + message)
-                    .decoration(TextDecoration.ITALIC, true)
-                    .color(TextColor.fromHexString("#AAAAAA"))
+                Component.text(sender.name + " replies: ")
+                    .decoration(TextDecoration.ITALIC, true).append(formattedMessage)
             )
             replierToTargetMap[replyTarget] = sender
         }
