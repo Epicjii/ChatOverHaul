@@ -5,6 +5,7 @@ import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.format.TextColor
 import net.kyori.adventure.text.format.TextDecoration
 import org.bukkit.Bukkit
+import org.bukkit.Color
 import org.bukkit.command.*
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
@@ -12,6 +13,7 @@ import org.bukkit.event.player.PlayerCommandPreprocessEvent
 import org.bukkit.event.server.ServerCommandEvent
 import org.bukkit.permissions.Permissible
 import org.bukkit.permissions.PermissionDefault
+import org.w3c.dom.css.RGBColor
 
 
 class ReplyCommand(private val replyCommand: PluginCommand) : CommandExecutor, TabCompleter, Listener {
@@ -35,11 +37,11 @@ class ReplyCommand(private val replyCommand: PluginCommand) : CommandExecutor, T
         } else {
             sender.sendMessage(
                 Component.text("You reply: ")
-                    .decoration(TextDecoration.ITALIC, true).append(formattedMessage)
+                    .decoration(TextDecoration.ITALIC, true).append(formattedMessage).color(TextColor.color(156, 157, 151))
             )
             replyTarget.sendMessage(
                 Component.text(sender.name + " replies: ")
-                    .decoration(TextDecoration.ITALIC, true).append(formattedMessage)
+                    .decoration(TextDecoration.ITALIC, true).append(formattedMessage).color(TextColor.color(156, 157, 151))
             )
             replierToTargetMap[replyTarget] = sender
         }
